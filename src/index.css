@@ -11,3 +11,65 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+.title-style h2 {
+  font-size: 30px;
+  line-height: 40px;
+  letter-spacing: 2px;
+}
+.title-style .line-bg {
+  position: relative;
+  width: 150px;
+  display: block;
+  margin: 0 auto;
+}
+.title-style .line-bg:before,
+.title-style .line-bg:after {
+  position: absolute;
+  content: "";
+  width: 75px;
+  bottom: 0;
+  height: 3px;
+}
+
+.title-style .line-bg:after {
+  left: 0;
+  border-radius: 0 0 0 10px;
+}
+.title-style .line-bg:before {
+  right: 0;
+  border-radius: 0 10px 0 0;
+}
+.title-style .line-bg.y-w:after {
+  background: #fbc02d;
+}
+.title-style .line-bg.y-w:before {
+  background: #ffffff;
+}
+.title-style .line-bg.y-b:after {
+  background: #fbc02d;
+}
+.title-style .line-bg.y-b:before {
+  background: #214790;
+}
+.title-style .line-bg.b-b:after {
+  background: #3F729B;
+}
+.title-style .line-bg.b-b:before {
+  background: #3E4551;
+}
+.title-style .line-bg.left-line {
+  margin: 0;
+}
+
+.mb-50{
+  margin-bottom: 50px;
+}
+.mb-md-30{
+  margin-bottom: 30px;
+}
+
+.pt-10{
+  padding-top: 10px;
+}
