@@ -31,7 +31,6 @@ class AppNavbar extends Component {
         color="primary-color"
         dark
         expand="md"
-        style={{ marginTop: "20px" }}
       >
         <MDBNavbarBrand>
           <strong className="white-text">MDBNavbar</strong>
@@ -40,13 +39,13 @@ class AppNavbar extends Component {
         <MDBCollapse id="navbarCollapse3" isOpen={this.state.collapseID} navbar>
           <MDBNavbarNav left>
             <MDBNavItem active>
-              <MDBNavLink to="#!">Home</MDBNavLink>
+              <MDBNavLink to="/">Home</MDBNavLink>
             </MDBNavItem>
             <MDBNavItem>
               <MDBNavLink to="#!">Features</MDBNavLink>
             </MDBNavItem>
             <MDBNavItem>
-              <MDBNavLink to="#!">Pricing</MDBNavLink>
+              <MDBNavLink to="/products">Products</MDBNavLink>
             </MDBNavItem>
             <MDBNavItem>
               <MDBDropdown>
@@ -73,7 +72,7 @@ class AppNavbar extends Component {
             <MDBNavItem>
               <MDBNavLink to="/login">Login</MDBNavLink>
             </MDBNavItem>
-            {/* <MDBNavItem>
+            <MDBNavItem>
                 <MDBNavLink
                   className="waves-effect waves-light d-flex align-items-center"
                   to="#!"
@@ -97,7 +96,7 @@ class AppNavbar extends Component {
                     <MDBDropdownItem href="#!">Log out</MDBDropdownItem>
                   </MDBDropdownMenu>
                 </MDBDropdown>
-              </MDBNavItem> */}
+              </MDBNavItem>
           </MDBNavbarNav>
         </MDBCollapse>
       </MDBNavbar>
