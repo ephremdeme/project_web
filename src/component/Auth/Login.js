@@ -12,22 +12,27 @@ import {
 } from "mdbreact";
 import { MDBLink } from "mdbreact";
 import { Link } from "react-router-dom";
+import { useMutation, useQuery } from "react-apollo";
+import { GET_USER } from "./graphql";
+import { Loading } from "mutation-cache-update";
 
 const LoginPage = () => {
-  
   const [values, setValues] = useState({
     email: "",
     password: ""
   });
 
+  
+
   const handleChange = e => {
     const { value, name } = e.target;
     setValues({ ...values, [name]: value });
   };
+  
 
-  const submit=(e)=>{
-      console.log(values)
-  }
+  const submit = e => {
+    console.log(values);
+  };
   return (
     <MDBContainer>
       <MDBRow className="justify-content-center">
@@ -36,7 +41,7 @@ const LoginPage = () => {
             <MDBCardBody className="mx-4">
               <div className="text-center">
                 <h3 className="dark-grey-text mb-5">
-                  <strong>Sign in</strong>
+                  <strong>Sign In</strong>
                 </h3>
               </div>
               <MDBInput
@@ -113,9 +118,8 @@ const LoginPage = () => {
               <p className="font-small grey-text d-flex justify-content-end">
                 Not a member?
                 <Link to="/register" className="blue-text ml-1">
-                    Sign Up
+                  Sign Up
                 </Link>
-                
               </p>
             </MDBModalFooter>
           </MDBCard>

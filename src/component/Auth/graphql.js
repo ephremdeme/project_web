@@ -2,14 +2,14 @@ import { gql } from "apollo-boost";
 
 export const REGISTER_USER = gql`
   mutation addUser(
-    $first_name: String
-    $last_name: String
-    $email: String
-    $password: String
+    $first_name: String!
+    $last_name: String!
+    $email: String!
+    $password: String!
   ) {
     createUser(
       firstName: $first_name
-      lastName: $lastName
+      lastName: $last_name
       email: $email
       password: $password
     ) {
@@ -28,6 +28,17 @@ export const GET_USER = gql`
       firstName
       email
       lastName
+    }
+  }
+`;
+
+export const GET_USERS = gql`
+  {
+    users {
+      id
+      firstName
+      lastName
+      email
     }
   }
 `;

@@ -12,25 +12,33 @@ import {
 } from "mdbreact";
 import { MDBLink } from "mdbreact";
 import { Link } from "react-router-dom";
+import { useQuery, useMutation } from "react-apollo";
+import { REGISTER_USER } from "./graphql";
 
+import { Loading } from "mutation-cache-update";
 const RegisterPage = () => {
-  
   const [values, setValues] = useState({
     first_name: "",
     last_name: "",
     email: "",
-    phone:"",
     password: ""
   });
+
+  const [addUser, { error, loading, data : mdata}] = useMutation(REGISTER_USER);
+  if (error) console.log(error);
+  if (mdata) console.log(mdata);
 
   const handleChange = e => {
     const { value, name } = e.target;
     setValues({ ...values, [name]: value });
   };
 
-  const submit=(e)=>{
-      console.log(values)
-  }
+  const submit = e => {
+    addUser({
+      variables: values
+    });
+  };
+  if(loading) return <Loading/>
   return (
     <MDBContainer>
       <MDBRow className="justify-content-center">
@@ -39,7 +47,7 @@ const RegisterPage = () => {
             <MDBCardBody className="mx-4">
               <div className="text-center">
                 <h3 className="dark-grey-text mb-5">
-                  <strong>Sign in</strong>
+                  <strong>Sign Up</strong>
                 </h3>
               </div>
               <MDBInput
@@ -91,7 +99,7 @@ const RegisterPage = () => {
                 validate
                 containerClass="mb-0"
               />
-              
+
               <div className="text-center mb-3">
                 <MDBBtn
                   type="button"
@@ -100,7 +108,7 @@ const RegisterPage = () => {
                   className="btn-block z-depth-1a"
                   onClick={submit}
                 >
-                  Sign in
+                  Register
                 </MDBBtn>
               </div>
               <p className="font-small dark-grey-text text-right d-flex justify-content-center mb-3 pt-2">
@@ -141,7 +149,7 @@ const RegisterPage = () => {
               <p className="font-small grey-text d-flex justify-content-end">
                 Already a member?
                 <Link to="/login" className="blue-text ml-1">
-                    Sign In
+                  Sign In
                 </Link>
               </p>
             </MDBModalFooter>
