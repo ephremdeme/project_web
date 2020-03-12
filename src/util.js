@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useState} from 'react';
+import { Tooltip } from 'reactstrap';
 
 export const Title = props => {
     return (
@@ -10,3 +11,17 @@ export const Title = props => {
       </React.Fragment>
     );
   };
+
+export const AppTooltip = props=>{
+  const [tooltipOpen, setTooltipOpen] = useState(false);
+
+  const toggle = () => setTooltipOpen(!tooltipOpen);
+  return (
+    <React.Fragment>
+      {props.children}
+      <Tooltip placement="top" isOpen={tooltipOpen} target={props.id} toggle={toggle}>
+        {props.text}
+      </Tooltip>
+    </React.Fragment>
+  )
+}
