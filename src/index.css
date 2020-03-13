@@ -70,6 +70,17 @@ code {
   margin-bottom: 30px;
 }
 
+.mx-50{
+  margin-left: 15%;
+  margin-right: 15%;
+}
+@media (max-width: 780px){
+  .mx-50{
+    margin-left: 3%;
+    margin-right: 3%;
+  }
+}
+
 .pt-10{
   padding-top: 10px;
 }
