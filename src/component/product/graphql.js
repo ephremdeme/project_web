@@ -92,18 +92,58 @@ export const GET_PRODUCTS = gql`
       id
       name
       price
+      category {
+        category
+      }
       images {
         filename
+      }
+      rating {
+        rating
       }
     }
   }
 `;
 
 export const GET_CATEGORY = gql`
-{
-  categories{
-    id
-    category
+  {
+    categories {
+      id
+      category
+    }
   }
-}
-`
+`;
+
+export const ADD_COMMENT = gql`
+  mutation addComment($comment: String!, $productId: Int!) {
+    createComment(comment: $comment, productId: $productId) {
+      id
+      comment
+    }
+  }
+`;
+export const PRODUCT_COMMENTS = gql`
+  query getProductComments($productId: Int!) {
+    comments(productId: $productId) {
+      id
+      comment
+    }
+  }
+`;
+
+export const COMMENTS = gql`
+  {
+    comments(productId: 6) {
+      id
+      comment
+    }
+  }
+`;
+
+export const DELETE_COMMENT = gql`
+  mutation deleteComment($id: Int!) {
+    deleteComment(id: $id) {
+      id
+    }
+  }
+`;
