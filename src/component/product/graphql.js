@@ -15,6 +15,7 @@ export const ADD_PRODUCT = gql`
     $quantity: Int!
     $description: String!
     $categoryId: Int!
+    $subCategoryId: Int!
     $image: Upload!
   ) {
     createProduct(
@@ -23,6 +24,7 @@ export const ADD_PRODUCT = gql`
       quantity: $quantity
       description: $description
       categoryId: $categoryId
+      subCategoryId: $subCategoryId
       file: $image
     ) {
       id
@@ -110,6 +112,19 @@ export const GET_CATEGORY = gql`
     categories {
       id
       category
+      SubCategory {
+        id
+        category
+      }
+    }
+  }
+`;
+
+export const ADD_RATE = gql`
+  mutation addRating($rating: Int!, $ProductId: Int!) {
+    rate(rating: $rating, ProductId: $ProductId) {
+      count
+      rating
     }
   }
 `;
@@ -117,6 +132,14 @@ export const GET_CATEGORY = gql`
 export const ADD_COMMENT = gql`
   mutation addComment($comment: String!, $productId: Int!) {
     createComment(comment: $comment, productId: $productId) {
+      id
+      comment
+    }
+  }
+`;
+export const UPDATE_COMMENT = gql`
+  mutation updateComment($comment: String!, $id: Int!) {
+    updateComment(comment: $comment, id: $id) {
       id
       comment
     }

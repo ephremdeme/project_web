@@ -10,13 +10,15 @@ dependencies:
   apollo-upload-client: 12.1.0_graphql@14.6.0
   bootstrap: 4.4.1_jquery@3.4.1
   bootstrap-css-only: 4.4.1
+  classnames: 2.2.6
   graphql: 14.6.0
   jquery: 3.4.1
   mdbreact: github.com/ephremdeme/mdblocal/269dd096f60f7fb2ef8b491c91c0d58312cb2eff
-  mutation-cache-update: 1.0.6_1f5411ee0aed08d7aea5ca1fcca9780d
+  mutation-cache-update: 1.0.7_1f5411ee0aed08d7aea5ca1fcca9780d
   react: 16.13.0
   react-apollo: 3.1.3_1f5411ee0aed08d7aea5ca1fcca9780d
   react-dom: 16.13.0_react@16.13.0
+  react-rating: 2.0.5_react-dom@16.13.0+react@16.13.0
   react-router-dom: 5.1.2_react@16.13.0
   react-scripts: 3.4.0
   reactstrap: 8.4.1_react-dom@16.13.0+react@16.13.0
@@ -2304,6 +2306,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-bBbHvjhm42UKki+wZpR89j73ykSXg99/bhuKuYYePtpma3ZAnmeGnl0WxXiZhPGsIfzKwCUkpPC0jlrVMBfRxA==
+  /@types/lodash/4.14.150:
+    dev: false
+    resolution:
+      integrity: sha512-kMNLM5JBcasgYscD9x/Gvr6lTAv2NVgsKtet/hm93qMyf/D1pt+7jeEZklKJKxMVmXjxbRVQQGfqDSfipYCO6w==
   /@types/minimatch/3.0.3:
     dev: false
     resolution:
@@ -2349,6 +2355,13 @@ packages:
     dev: false
     resolution:
       integrity: sha512-SsGVT4E7L2wLN3tPYLiF20hmZTPGuzaayVunfgXzUn1x4uHVsKH6QDJQ/TdpHqwsTLd4CwrmQ2vOgxN7gE24gw==
+  /@types/react/16.9.34:
+    dependencies:
+      '@types/prop-types': 15.7.3
+      csstype: 2.6.10
+    dev: false
+    resolution:
+      integrity: sha512-8AJlYMOfPe1KGLKyHpflCg5z46n0b5DbRfqDksxBLBTUpB75ypDBAO9eCUcjNwE6LCUslwTz00yyG/X9gaVtow==
   /@types/stack-utils/1.0.1:
     dev: false
     resolution:
@@ -4517,6 +4530,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-GBrLZYZ4X4x6/QEoBnIrqb8B/f5l4+8me2dkom/j1Gtbxy0kBv6OGzKuAsGM75bkGwGAFkt56Iwg28S3XTZgSA==
+  /csstype/2.6.10:
+    dev: false
+    resolution:
+      integrity: sha512-D34BqZU4cIlMCY93rZHbrq9pjTAQJ3U8S8rfBqjwHxkGPThWFjzZDQpgMJY0QViLxth6ZKYiwFBo14RdN44U/w==
   /csstype/2.6.9:
     dev: false
     resolution:
@@ -8322,7 +8339,7 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-ji6J5enbMyGRHIAkAOu3WdV8nggqviKCEKtXcOqfphZZtQrmHKycfynJ2V7eVPUA4NhJ6V7Wf4TmGbTwKE9B6g==
-  /mutation-cache-update/1.0.6_1f5411ee0aed08d7aea5ca1fcca9780d:
+  /mutation-cache-update/1.0.7_1f5411ee0aed08d7aea5ca1fcca9780d:
     dependencies:
       apollo-client: 2.6.8_graphql@14.6.0
       graphql: 14.6.0
@@ -8339,7 +8356,7 @@ packages:
       react: ^16.8.0
       react-dom: ^16.8.0
     resolution:
-      integrity: sha512-/RFN2k60Nu+ofS7HxIYT7BAZTFbWh76LSmQF/1VczGifh2/RwJ1VdT307CN7O+iESAWmoM2BgjrpYDK+rrbMvg==
+      integrity: sha512-B8g1ktSdUbWlLLfcdngcK2TasNu6oAp6UJoBE5ljZiXnXIboAm9rC1U4otBoy2F1vRYz+VXCRAVnDA9AafJCzQ==
   /mute-stream/0.0.8:
     dev: false
     resolution:
@@ -10298,6 +10315,18 @@ packages:
       react: 0.14.x || ^15.0.0 || ^16.0.0
     resolution:
       integrity: sha512-nmqYTx7QVjCm3WUZLeuOomna138R1luC4EqkW3hxJUrAe+3eNz3oFCLYdnPwILfn0mX1Ew2c3wctrjlUMYYUww==
+  /react-rating/2.0.5_react-dom@16.13.0+react@16.13.0:
+    dependencies:
+      '@types/lodash': 4.14.150
+      '@types/react': 16.9.34
+      react: 16.13.0
+      react-dom: 16.13.0_react@16.13.0
+    dev: false
+    peerDependencies:
+      react: '>=16.3.0'
+      react-dom: '>=16.3.0'
+    resolution:
+      integrity: sha512-uldxgLCe5bzqGX7V+7/bPgQQj2Kok6eiMgTMxjKOhfhnQkFLDlc4TjMlp7gaJFAHWdbiOnqpiShI7z8as6oWtg==
   /react-router-dom/5.1.2_react@16.13.0:
     dependencies:
       '@babel/runtime': 7.8.4
@@ -12844,13 +12873,15 @@ specifiers:
   apollo-upload-client: ^12.1.0
   bootstrap: ^4.4.1
   bootstrap-css-only: ^4.4.1
+  classnames: ^2.2.6
   graphql: ^14.6.0
   jquery: ^3.4.1
   mdbreact: 'git+https://github.com/ephremdeme/mdblocal.git'
-  mutation-cache-update: ^1.0.6
+  mutation-cache-update: ^1.0.7
   react: ^16.12.0
   react-apollo: ^3.1.3
   react-dom: ^16.12.0
+  react-rating: ^2.0.5
   react-router-dom: ^5.1.2
   react-scripts: ^3.4.0
   reactstrap: ^8.4.1
