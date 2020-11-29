@@ -15,7 +15,6 @@ import { Link } from "react-router-dom";
 import { useQuery, useMutation } from "react-apollo";
 import { REGISTER_USER } from "./graphql";
 
-import { Loading } from "mutation-cache-update";
 const RegisterPage = () => {
   const [values, setValues] = useState({
     first_name: "",
@@ -38,7 +37,6 @@ const RegisterPage = () => {
       variables: values
     });
   };
-  if(loading) return <Loading/>
   return (
     <MDBContainer>
       <MDBRow className="justify-content-center">

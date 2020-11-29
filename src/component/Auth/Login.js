@@ -14,7 +14,6 @@ import { MDBLink } from "mdbreact";
 import { Link } from "react-router-dom";
 import { useMutation, useQuery } from "react-apollo";
 import { GET_USER } from "./graphql";
-import { Loading } from "mutation-cache-update";
 
 const LoginPage = () => {
   const [values, setValues] = useState({

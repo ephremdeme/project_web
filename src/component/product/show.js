@@ -1,20 +1,14 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Title } from "../../util";
 import { useQuery, useMutation } from "react-apollo";
 import {
   GET_PRODUCT,
-  ADD_PRODUCT,
   ADD_COMMENT,
   PRODUCT_COMMENTS,
-  COMMENTS,
-  DELETE_COMMENT
+  DELETE_COMMENT,
+  UPDATE_COMMENT,
 } from "./graphql";
-import {
-  Loading,
-  useAddMutation,
-  useDeleteMutation
-} from "mutation-cache-update";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { MDBView } from "mdbreact";
 import { MDBMask, MDBMedia } from "mdbreact";
 import { MDBInput } from "mdbreact";
@@ -27,28 +21,17 @@ import { MDBCol } from "mdbreact";
 const ProductShow = () => {
   let { id } = useParams();
   id = parseInt(id);
-  const [value, setValue] = useState("");
-  const [textInput, setTextInput] = useState(null);
-
-  const handleClick = value => {
-    textInput.focus();
-    setValue(value);
-    console.log(textInput.value);
-  };
-
-  const setRef = ref => setTextInput(ref);
 
   const { error, loading, data } = useQuery(GET_PRODUCT, { variables: { id } });
 
-  if (loading) return <Loading />;
   if (error) return <div>Error</div>;
   return (
     <React.Fragment>
       <div className="container">
         <Title title={data.product.name} />
         <NewsImage image={data.product.images[0].filename} />
-        <CommentInput id={id} refer={setRef} value={value} />
-        <CommentList focusInput={handleClick} />
+
+        <CommentList />
         <MDBMedia list className="mt-3">
           <MDBMedia tag="li">
             <MDBMedia left href="#">
@@ -84,20 +67,17 @@ const ProductShow = () => {
             </MDBMedia>
           </MDBMedia>
         </MDBMedia>
+        <div id="#comment"> hello</div>
       </div>
     </React.Fragment>
   );
 };
 
-const Delete = props => {
+const Delete = (props) => {
   const { id } = useParams();
-  const [deleteProduct, { error, data }] = useDeleteMutation(
-    DELETE_COMMENT,
-    PRODUCT_COMMENTS,
-    "deleteComment",
-    "comments",
-    { productId: parseInt(id) }
-  );
+  const [deleteProduct, { data }] = useMutation(DELETE_COMMENT, {
+    variables: { productId: parseInt(id) },
+  });
 
   if (data) console.log(data);
 
@@ -107,14 +87,14 @@ const Delete = props => {
   };
   return (
     <React.Fragment>
-      <MDBBtn rounded outline color="danger" onClick={submit}>
+      <MDBBtn color="danger" className="text-danger" flat onClick={submit}>
         Delete
       </MDBBtn>
     </React.Fragment>
   );
 };
 
-const NewsImage = props => (
+const NewsImage = (props) => (
   <MDBView hover className="rounded z-depth-3 mb-4 view-image-news" waves>
     <img
       className="img-fluid"
@@ -125,20 +105,50 @@ const NewsImage = props => (
   </MDBView>
 );
 
-const CommentList = props => {
+const CommentList = (props) => {
   let { id } = useParams();
+  id = parseInt(id);
+  const [commentId, setCommentId] = useState(null);
+  const [value, setValue] = useState("");
+  const [textInput, setTextInput] = useState(null);
+
+  const [updateComment, { error: up_Error, loading: up_Loading }] = useMutation(
+    UPDATE_COMMENT
+  );
+
+  const handleClick = (value, commentId) => {
+    textInput.focus();
+    setValue(value);
+    setCommentId(commentId);
+    console.log(textInput.value);
+  };
+
+  const handleUpdateSummit = (value) => {
+    console.log("it worked");
+    updateComment({
+      variables: value,
+    });
+  };
+
+  const setRef = (ref) => setTextInput(ref);
 
   const { error, loading, data } = useQuery(PRODUCT_COMMENTS, {
-    variables: { productId: parseInt(id) }
+    variables: { productId: parseInt(id) },
   });
-  if (loading) return <Loading />;
+
   if (error) return <div>Error</div>;
 
   return (
     <React.Fragment>
-      {data.comments.map(comment => (
+      <CommentInput
+        id={commentId}
+        refer={setRef}
+        value={value}
+        submit={handleUpdateSummit}
+      />
+      {data.comments.map((comment) => (
         <MDBMedia key={comment.id} className="py-3">
-          <MDBMedia left href="#">
+          <MDBMedia left href="#comment">
             <MDBMedia
               object
               className="container"
@@ -155,7 +165,11 @@ const CommentList = props => {
             scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum
             in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac
             nisi vulputate fringilla. Donec lacinia congue felis in faucibus
-            <Edit value={comment.comment} focusInput={props.focusInput} />
+            <Edit
+              value={comment.comment}
+              id={comment.id}
+              focusInput={handleClick}
+            />
             <Delete id={comment.id} />
           </MDBMedia>
         </MDBMedia>
@@ -164,48 +178,46 @@ const CommentList = props => {
   );
 };
 
-const Edit = props => {
+const Edit = (props) => {
   const handleClick = () => {
     // console.log(props.value);
-    props.focusInput(props.value);
+    props.focusInput(props.value, props.id);
   };
   return (
     <React.Fragment>
-      <MDBBtn rounded outline onClick={handleClick}>
+      <MDBBtn
+        flat
+        className="text-info"
+        style={{ marginLeft: "0px" }}
+        onClick={handleClick}
+      >
         Edit
       </MDBBtn>
     </React.Fragment>
   );
 };
 
-const CommentInput = props => {
+const CommentInput = (props) => {
   let { id } = useParams();
   id = parseInt(id);
-  const [comment, setComment] = useState("");
-  const [value, setValue] = useState(null);
+  const [comment, setComment] = useState("Comment......");
+  const [commentId, setCommentId] = useState(props.id);
 
-  const [addComment, { error, loading, data }] = useAddMutation(
-    ADD_COMMENT,
-    PRODUCT_COMMENTS,
-    "createComment",
-    "comments",
-    { productId: id }
-  );
-
-  useEffect(() => {
-    handleFocus()
-    // setValue(props.value)
+  const [addComment] = useMutation(ADD_COMMENT, {
+    variables: { productId: id },
   });
 
-  const handleFocus = e => {
+  useEffect(() => {
+    console.log(props);
     if (!props.value == "") {
-      setValue(props.value);
+      setComment(props.value);
+      setCommentId(props.id);
+      console.log("prop value init :" + props.value, props.id);
     }
-  };
+  }, [props.value]);
 
-  const handleChange = e => {
-    const { name, value } = e.target;
-    setValue(value);
+  const handleChange = (e) => {
+    const { value } = e.target;
     setComment(value);
   };
 
@@ -213,12 +225,17 @@ const CommentInput = props => {
     addComment({
       variables: {
         comment: comment,
-        productId: id
-      }
+        productId: id,
+      },
     });
     setComment("");
   };
 
+  const update = () => {
+    props.submit({ comment: comment, id: commentId });
+    setComment("");
+    setCommentId(null);
+  };
   return (
     <MDBContainer className="my-5">
       <MDBCol md="8" className="px-3">
@@ -231,9 +248,8 @@ const CommentInput = props => {
               label="Your Comment"
               icon="pencil-alt"
               name="comment"
-              value={value}
-              onFocus={handleFocus}
-              inputRef={input => props.refer(input)}
+              value={comment}
+              inputRef={(input) => props.refer(input)}
               onChange={handleChange}
             />
           </div>
@@ -242,7 +258,7 @@ const CommentInput = props => {
             <MDBBtn
               outline
               color="secondary"
-              onClick={props.sumbmit ? props.submit : submit}
+              onClick={commentId ? update : submit}
             >
               Post <MDBIcon icon="paper-plane" className="ml-1" />
             </MDBBtn>
