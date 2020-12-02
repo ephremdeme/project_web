@@ -14,9 +14,6 @@ export const GET_PRODUCT = gql`
     product(id: $id) {
       id
       name
-      quantity
-      views
-      description
       price
       comments {
         id

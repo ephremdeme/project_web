@@ -12,6 +12,9 @@ import AppRegister from "./pages/auths/Register";
 import { GET_USER } from "./pages/auths/graphql";
 import { useQuery, useReactiveVar } from "@apollo/client";
 import { authDataVar } from "./authReactive";
+import AppHome from "./pages/home/AppHome";
+import AppFooter from "./layout/AppFooter";
+import Product from "./pages/product/Product";
 
 function App() {
   const { error, loading, data } = useQuery(GET_USER);
@@ -44,10 +47,28 @@ function App() {
               >
                 <AppHeader />
                 <Switch>
-                  <Route exact path="/" component={Login} />
+                  <Route exact path="/" component={AppHome} />
+                  {/* Authentication */}
                   <Route exact path="/login" component={Login} />
                   <Route exact path="/register" component={AppRegister} />
+
+                  {/* Product*/}
+
+                  <Route
+                    path="/product/:id"
+                    render={(routerProps) => (
+                      <Product
+                        {...routerProps}
+                        key={routerProps.match.params.id}
+                      />
+                    )}
+                  />
                 </Switch>
+                <AppFooter
+                  backgroundColorClass="bg-gray"
+                  spaceTopClass="pt-100"
+                  spaceBottomClass="pb-70"
+                />
               </Suspense>
             </ScrollToTop>
           </Router>

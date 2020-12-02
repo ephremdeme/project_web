@@ -31,7 +31,7 @@ const AppLogin = (props) => {
         token: data?.login?.token,
         username: data?.login?.User?.username,
       });
-      console.log(data);
+      props.history.push("/")
     }
   }, [data]);
 
