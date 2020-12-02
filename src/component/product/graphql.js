@@ -1,4 +1,4 @@
-import { gql } from "apollo-boost";
+import { gql } from "@apollo/client";
 
 export const UPLOAD_IMAGE = gql`
   mutation uploadFile($file: Upload!, $productId: Int!) {
@@ -8,70 +8,15 @@ export const UPLOAD_IMAGE = gql`
     }
   }
 `;
-export const ADD_PRODUCT = gql`
-  mutation addProduct(
-    $name: String!
-    $price: Float!
-    $quantity: Int!
-    $description: String!
-    $categoryId: Int!
-    $subCategoryId: Int!
-    $image: Upload!
-  ) {
-    createProduct(
-      name: $name
-      price: $price
-      quantity: $quantity
-      description: $description
-      categoryId: $categoryId
-      subCategoryId: $subCategoryId
-      file: $image
-    ) {
-      id
-      name
-      price
-      quantity
-      description
-      images {
-        filename
-      }
-    }
-  }
-`;
-export const UPDATE_PRODUCT = gql`
-  mutation editProduct(
-    $name: String!
-    $price: Float!
-    $quantity: Int!
-    $description: String!
-    $categoryId: Int!
-    $image: Upload!
-  ) {
-    updateProduct(
-      name: $name
-      price: $price
-      quantity: $quantity
-      description: $description
-      categoryId: $categoryId
-      file: $image
-    ) {
-      id
-      name
-      price
-      quantity
-      description
-      images {
-        filename
-      }
-    }
-  }
-`;
 
 export const GET_PRODUCT = gql`
   query getProduct($id: Int!) {
     product(id: $id) {
       id
       name
+      quantity
+      views
+      description
       price
       comments {
         id
@@ -94,6 +39,7 @@ export const GET_PRODUCTS = gql`
       id
       name
       price
+      description
       category {
         category
       }

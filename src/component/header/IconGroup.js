@@ -58,6 +58,9 @@ const IconGroup = ({
             {authData.username && authData.id ? (
               <React.Fragment>
                 <li>
+                  <h3>{authData.username}</h3>
+                </li>
+                <li>
                   <Link to={process.env.PUBLIC_URL + "/my-account"}>
                     my account
                   </Link>
