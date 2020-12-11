@@ -28,8 +28,8 @@ export const REGISTER_USER = gql`
 `;
 
 export const LOGIN_USER = gql`
-  mutation login($password: String, $username: String) {
-    login(password: $password, username: $username) {
+  mutation login($password: String, $phone: String) {
+    login(password: $password, phone: $phone) {
       id
       token
       User {

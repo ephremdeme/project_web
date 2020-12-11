@@ -16,7 +16,11 @@ export const GET_PRODUCT = gql`
       name
       quantity
       views
-      description
+      shortDescription
+      fullDescription
+      seller {
+        phone
+      }
       price
       comments {
         id
@@ -33,21 +37,35 @@ export const GET_PRODUCT = gql`
   }
 `;
 
-export const GET_PRODUCTS = gql`
-  {
-    products {
-      id
-      name
-      price
-      description
-      category {
-        category
-      }
-      images {
-        filename
-      }
-      rating {
-        rating
+export const GET_ALL_PRODUCTS = gql`
+  query getProducts($offset: Int, $limit: Int) {
+    products(offset: $offset, limit: $limit) {
+      count
+      products {
+        id
+        name
+        quantity
+        shortDescription
+        fullDescription
+        price
+        seller {
+          phone
+        }
+        rating {
+          count
+          rating
+        }
+        images {
+          filename
+        }
+        category {
+          id
+          category
+        }
+        subCategory {
+          id
+          category
+        }
       }
     }
   }
@@ -92,19 +110,13 @@ export const UPDATE_COMMENT = gql`
   }
 `;
 export const PRODUCT_COMMENTS = gql`
-  query getProductComments($productId: Int!) {
+  query getProductComments($productId: Int!, offset: Int!, limit: Int) {
     comments(productId: $productId) {
-      id
-      comment
-    }
-  }
-`;
-
-export const COMMENTS = gql`
-  {
-    comments(productId: 6) {
-      id
-      comment
+      count
+      comments {
+        id
+        comment
+      }
     }
   }
 `;

@@ -1,4 +1,4 @@
-import { useMutation } from "@apollo/client";
+import { useMutation, useReactiveVar } from "@apollo/client";
 import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import { Card, Col, Container, Form, FormControl, Row } from "react-bootstrap";
@@ -7,11 +7,16 @@ import { authDataVar } from "../../authReactive";
 import { LOGIN_USER, REGISTER_USER } from "./graphql";
 
 const AppRegister = (props) => {
+  let user = useReactiveVar(authDataVar);
+  if (user?.username) {
+    props.history.goBack();
+  }
+
   const [values, setValues] = useState({
     username: "",
     password: "",
     first_name: "",
-    last_name:"",
+    last_name: "",
     phone: "",
   });
 
@@ -32,7 +37,7 @@ const AppRegister = (props) => {
       token: data.createUser.token,
       username: data.createUser.User.username,
     });
-    console.log(data);
+    props.history.goBack();
   }
 
   const handleSubmit = () => {

@@ -56,7 +56,8 @@ const Header = ({
           <div className="row">
             <div className="col-xl-2 col-lg-2 col-md-6 col-4">
               {/* header logo */}
-              <Logo imageUrl="/assets/img/logo/logo.png" logoClass="logo" />
+              {/* <Logo imageUrl="/assets/img/logo/logo.png" logoClass="logo" /> */}
+              <h1 style={{height :"26px", fontWeight:"lighter"}} className="logo" >Shop in AR</h1>
             </div>
             <div className="col-xl-8 col-lg-8 d-none d-lg-block">
               {/* Nav menu */}
@@ -87,11 +88,8 @@ const AppHeader = ()=>{
     return (
     <React.Fragment>
         <MetaTags>
-        <title>Flone | Fashion Home</title>
-        <meta
-          name="description"
-          content="Fashion home of flone react minimalist eCommerce template."
-        />
+        <title>Shop In AR | Home</title>
+        
       </MetaTags>
     <Header
       layout="container-fluid"

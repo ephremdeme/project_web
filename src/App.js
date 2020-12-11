@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect } from "react";
+import React, { lazy, Suspense, useEffect } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -15,6 +15,10 @@ import { authDataVar } from "./authReactive";
 import AppHome from "./pages/home/AppHome";
 import AppFooter from "./layout/AppFooter";
 import Product from "./pages/product/Product";
+import Cart from "./pages/other/Cart";
+import Checkout from "./pages/other/Checkout";
+import Wishlist from "./pages/other/Wishlist";
+const ShopGridStandard = lazy(() => import("./pages/shop/ShopGridStandard"));
 
 function App() {
   const { error, loading, data } = useQuery(GET_USER);
@@ -37,8 +41,8 @@ function App() {
             <ScrollToTop>
               <Suspense
                 fallback={
-                  <div className="flone-preloader-wrapper">
-                    <div className="flone-preloader">
+                  <div className="Shop In AR-preloader-wrapper">
+                    <div className="Shop In AR-preloader">
                       <span></span>
                       <span></span>
                     </div>
@@ -62,6 +66,24 @@ function App() {
                         key={routerProps.match.params.id}
                       />
                     )}
+                  />
+
+                  {/* Shop pages */}
+                  <Route
+                    path={process.env.PUBLIC_URL + "/shop"}
+                    component={ShopGridStandard}
+                  />
+                  <Route
+                    path={process.env.PUBLIC_URL + "/cart"}
+                    component={Cart}
+                  />
+                  <Route
+                    path={process.env.PUBLIC_URL + "/checkout"}
+                    component={Checkout}
+                  />
+                  <Route
+                    path={process.env.PUBLIC_URL + "/wishlist"}
+                    component={Wishlist}
                   />
                 </Switch>
                 <AppFooter

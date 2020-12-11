@@ -3,29 +3,18 @@ import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { useToasts } from "react-toast-notifications";
 
-const MenuCart = ({ cartData, currency, deleteFromCart }) => {
+const MenuCart = ({ cartData, deleteFromCart }) => {
   let cartTotalPrice = 0;
   const { addToast } = useToasts();
   return (
     <div className="shopping-cart-content">
-      {cartData && cartData.length > 0 ? (
+      {cartData && cartData?.length > 0 ? (
         <Fragment>
-          {/* <ul>
-            {cartData.map((single, key) => {
-              const discountedPrice = getDiscountPrice(
-                single.price,
-                single.discount
-              );
-              const finalProductPrice = (
-                single.price * currency.currencyRate
-              ).toFixed(2);
-              const finalDiscountedPrice = (
-                discountedPrice * currency.currencyRate
-              ).toFixed(2);
+          <ul>
+            {cartData?.map((single, key) => {
+              const finalProductPrice = single.price.toFixed(2);
 
-              discountedPrice != null
-                ? (cartTotalPrice += finalDiscountedPrice * single.quantity)
-                : (cartTotalPrice += finalProductPrice * single.quantity);
+              cartTotalPrice += finalProductPrice * single.quantities;
 
               return (
                 <li className="single-shopping-cart" key={key}>
@@ -33,7 +22,7 @@ const MenuCart = ({ cartData, currency, deleteFromCart }) => {
                     <Link to={process.env.PUBLIC_URL + "/product/" + single.id}>
                       <img
                         alt=""
-                        src={process.env.PUBLIC_URL + single.image[0]}
+                        src={process.env.PUBLIC_URL + single.images[0]}
                         className="img-fluid"
                       />
                     </Link>
@@ -47,21 +36,8 @@ const MenuCart = ({ cartData, currency, deleteFromCart }) => {
                         {single.name}{" "}
                       </Link>
                     </h4>
-                    <h6>Qty: {single.quantity}</h6>
-                    <span>
-                      {discountedPrice !== null
-                        ? currency.currencySymbol + finalDiscountedPrice
-                        : currency.currencySymbol + finalProductPrice}
-                    </span>
-                    {single.selectedProductColor &&
-                    single.selectedProductSize ? (
-                      <div className="cart-item-variation">
-                        <span>Color: {single.selectedProductColor}</span>
-                        <span>Size: {single.selectedProductSize}</span>
-                      </div>
-                    ) : (
-                      ""
-                    )}
+                    <h6>Qty: {single.quantities}</h6>
+                    <span>{"$" + finalProductPrice}</span>
                   </div>
                   <div className="shopping-cart-delete">
                     <button onClick={() => deleteFromCart(single, addToast)}>
@@ -71,12 +47,12 @@ const MenuCart = ({ cartData, currency, deleteFromCart }) => {
                 </li>
               );
             })}
-          </ul> */}
+          </ul>
           <div className="shopping-cart-total">
             <h4>
               Total :{" "}
               <span className="shop-total">
-                {currency.currencySymbol + cartTotalPrice.toFixed(2)}
+                {"$" + cartTotalPrice.toFixed(2)}
               </span>
             </h4>
           </div>
@@ -102,7 +78,7 @@ const MenuCart = ({ cartData, currency, deleteFromCart }) => {
 MenuCart.propTypes = {
   cartData: PropTypes.array,
   currency: PropTypes.object,
-  deleteFromCart: PropTypes.func
+  deleteFromCart: PropTypes.func,
 };
 
 export default MenuCart;

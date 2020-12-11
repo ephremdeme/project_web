@@ -1,98 +1,31 @@
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
 import PropTypes from "prop-types";
 import React, { Suspense, useEffect, useState } from "react";
+import { cartItemsVar, wishlistItemsVar } from "../../authReactive";
 import ProductGridSingle from "../../component/product/ProductGridSingle";
-import { GET_PRODUCTS } from "./graphql";
+import { PHOTO_LINK } from "../../config";
+import { addToCart } from "../../pages/other/cartHelper";
+import { ADD_TO_WISHLIST } from "../../pages/other/graphql";
+import { addToWishlist } from "../../pages/other/wishlistHelper";
 
 const ProductGrid = ({
+  category,
   products,
-  currency,
-  addToCart,
-  addToWishlist,
-  addToCompare,
-  cartItems,
-  wishlistItems,
-  compareItems,
   sliderClassName,
   spaceBottomClass,
 }) => {
-  const { error, loading, data } = useQuery(GET_PRODUCTS);
-
-  if (error) return <h2>{" An Error has occurred:  " + error.message}</h2>;
+  let cartItems = useReactiveVar(cartItemsVar);
+  let wishlistItems = useReactiveVar(wishlistItemsVar);
+  let [addToWishlistServer, { loading, error, data }] = useMutation(
+    ADD_TO_WISHLIST
+  );
+  console.log("Data", data);
   return (
     <Suspense fallback={<h1> Loading Products </h1>}>
-      {data?.products?.map((item) => {
+      {products?.map((item) => {
         let product = Object.assign({}, item);
-        product.discount = 10;
-        product.new = true;
-        product.variation = [
-          {
-            color: "white",
-            image:
-              "http://10.240.72.53:5001/products/" +
-              product.id +
-              "/images/" +
-              product.images[0].filename,
-            size: [
-              {
-                name: "x",
-                stock: 3,
-              },
-              {
-                name: "m",
-                stock: 2,
-              },
-              {
-                name: "xl",
-                stock: 5,
-              },
-            ],
-          },
-          {
-            color: "black",
-            image: "/assets/img/product/fashion/8.jpg",
-            size: [
-              {
-                name: "x",
-                stock: 4,
-              },
-              {
-                name: "m",
-                stock: 7,
-              },
-              {
-                name: "xl",
-                stock: 9,
-              },
-              {
-                name: "xxl",
-                stock: 1,
-              },
-            ],
-          },
-          {
-            color: "brown",
-            image: "/assets/img/product/fashion/3.jpg",
-            size: [
-              {
-                name: "x",
-                stock: 1,
-              },
-              {
-                name: "m",
-                stock: 2,
-              },
-              {
-                name: "xl",
-                stock: 4,
-              },
-              {
-                name: "xxl",
-                stock: 0,
-              },
-            ],
-          },
-        ];
+        // product.discount = 10;
+        // product.new = true;
         product.shortDescription = `Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, 
           nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in 
           ea voluptate velit esse quam nihil molestiae consequatur.`;
@@ -100,12 +33,8 @@ const ProductGrid = ({
           laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto 
           beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut 
           odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.`;
-        product.image = product?.images?.map(
-          (image) =>
-            "http://10.240.72.53:5001/products/" +
-            product.id +
-            "/images/" +
-            image.filename
+        product.images = product?.images?.map(
+          (image) => PHOTO_LINK + product.id + "/images/" + image.filename
         );
 
         return (
@@ -113,23 +42,17 @@ const ProductGrid = ({
             sliderClassName={sliderClassName}
             spaceBottomClass={spaceBottomClass}
             product={product}
-            currency={currency}
             addToCart={addToCart}
             addToWishlist={addToWishlist}
-            addToCompare={addToCompare}
-            // cartItem={
-            //   cartItems.filter((cartItem) => cartItem.id === product.id)[0]
-            // }
-            // wishlistItem={
-            //   wishlistItems.filter(
-            //     (wishlistItem) => wishlistItem.id === product.id
-            //   )[0]
-            // }
-            // compareItem={
-            //   compareItems.filter(
-            //     (compareItem) => compareItem.id === product.id
-            //   )[0]
-            // }
+            addToWishlistServer={addToWishlistServer}
+            cartItem={
+              cartItems.filter((cartItem) => cartItem.id === product.id)[0]
+            }
+            wishlistItem={
+              wishlistItems.filter(
+                (wishlistItem) => wishlistItem.id === product.id
+              )[0]
+            }
             key={product.id}
           />
         );
@@ -142,6 +65,7 @@ ProductGrid.propTypes = {
   addToCart: PropTypes.func,
   addToCompare: PropTypes.func,
   addToWishlist: PropTypes.func,
+  addToWishlistServer: PropTypes.func,
   cartItems: PropTypes.array,
   compareItems: PropTypes.array,
   currency: PropTypes.object,

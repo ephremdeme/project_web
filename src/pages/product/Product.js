@@ -9,6 +9,7 @@ import { useQuery } from "@apollo/client";
 import { GET_PRODUCT } from "../../wrappers/product/graphql";
 import Skeleton from "react-loading";
 import ProductDescriptionTab from "../../wrappers/product/ProductDescriptionTab";
+import { PHOTO_LINK } from "../../config";
 
 const Product = ({ location, match }) => {
   const { pathname } = location;
@@ -20,81 +21,13 @@ const Product = ({ location, match }) => {
   });
 
   const [view, setView] = useState(false);
-  console.log(view);
 
   useEffect(() => {
     if (data) {
       let product = Object.assign({}, data?.product);
       product.discount = 10;
       product.new = true;
-      product.variation = [
-        {
-          color: "white",
-          image:
-            "http://10.240.72.53:5001/products/" +
-            product.id +
-            "/images/" +
-            product.images[0].filename,
-          size: [
-            {
-              name: "x",
-              stock: 3,
-            },
-            {
-              name: "m",
-              stock: 2,
-            },
-            {
-              name: "xl",
-              stock: 5,
-            },
-          ],
-        },
-        {
-          color: "black",
-          image: "/assets/img/product/fashion/8.jpg",
-          size: [
-            {
-              name: "x",
-              stock: 4,
-            },
-            {
-              name: "m",
-              stock: 7,
-            },
-            {
-              name: "xl",
-              stock: 9,
-            },
-            {
-              name: "xxl",
-              stock: 1,
-            },
-          ],
-        },
-        {
-          color: "brown",
-          image: "/assets/img/product/fashion/3.jpg",
-          size: [
-            {
-              name: "x",
-              stock: 1,
-            },
-            {
-              name: "m",
-              stock: 2,
-            },
-            {
-              name: "xl",
-              stock: 4,
-            },
-            {
-              name: "xxl",
-              stock: 0,
-            },
-          ],
-        },
-      ];
+
       product.shortDescription = `Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, 
           nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in 
           ea voluptate velit esse quam nihil molestiae consequatur.`;
@@ -103,27 +36,20 @@ const Product = ({ location, match }) => {
           beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut 
           odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.`;
       product.image = product?.images?.map(
-        (image) =>
-          "http://10.240.72.53:5001/products/" +
-          product.id +
-          "/images/" +
-          image.filename
+        (image) => PHOTO_LINK + product.id + "/images/" + image.filename
       );
 
-      console.log(product.image);
-      
-      setView(<LoadProduct product={product} />)
-      ;
+      setView(<LoadProduct product={product} />);
     }
   }, [data]);
 
   return (
     <Fragment>
       <MetaTags>
-        <title>Flone | Product Page</title>
+        <title>Shop In AR | Product Page</title>
         <meta
           name="description"
-          content="Product page of flone react minimalist eCommerce template."
+          content="Product page of Shop In AR react minimalist eCommerce template."
         />
       </MetaTags>
 
@@ -134,7 +60,9 @@ const Product = ({ location, match }) => {
 
       {/* breadcrumb */}
       <Breadcrumb />
-      <Suspense fallback={<Skeleton row={5}  width={2050} />}>{data &&  view}</Suspense>
+      <Suspense fallback={<Skeleton row={5} width={2050} />}>
+        {data && view}
+      </Suspense>
     </Fragment>
   );
 };
@@ -152,14 +80,15 @@ const LoadProduct = ({ product }) => {
 
       {/* product description tab */}
       <ProductDescriptionTab
-          spaceBottomClass="pb-90"
-          productFullDesc={product.fullDescription}
-        />
+        spaceBottomClass="pb-90"
+        reviewCount={product.rating.count}
+        productFullDesc={product.fullDescription}
+      />
 
       {/* related product slider */}
       <RelatedProductSlider
         spaceBottomClass="pb-95"
-        category={product?.category?.category}
+        category={product?.category?.id}
       />
     </React.Fragment>
   );
