@@ -2,20 +2,18 @@ import PropTypes from "prop-types";
 import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import { useToasts } from "react-toast-notifications";
-import Rating from "./sub-components/ProductRating";
+import Rating from "react-rating";
 import ProductModal from "./ProductModal";
+import { addToCart } from "../../pages/other/cartHelper";
+import { addToWishlist } from "../../pages/other/wishlistHelper";
 
 const ProductGridSingle = ({
   product,
-  currency,
-  addToCart,
-  addToWishlist,
-  addToCompare,
   cartItem,
   wishlistItem,
-  compareItem,
   sliderClassName,
   spaceBottomClass,
+  addToWishlistServer
 }) => {
   const [modalShow, setModalShow] = useState(false);
   const { addToast } = useToasts();
@@ -38,13 +36,13 @@ const ProductGridSingle = ({
             <Link to={process.env.PUBLIC_URL + "/product/" + product.id}>
               <img
                 className="default-img"
-                src={process.env.PUBLIC_URL + product.image[0]}
+                src={process.env.PUBLIC_URL + product.images[0]}
                 alt=""
               />
-              {product.image.length > 1 ? (
+              {product.images.length > 1 ? (
                 <img
                   className="hover-img"
-                  src={process.env.PUBLIC_URL + product.image[1]}
+                  src={process.env.PUBLIC_URL + product.images[1]}
                   alt=""
                 />
               ) : (
@@ -74,7 +72,7 @@ const ProductGridSingle = ({
                       ? "Added to wishlist"
                       : "Add to wishlist"
                   }
-                  onClick={() => addToWishlist(product, addToast)}
+                  onClick={() => addToWishlist(product, addToast, addToWishlistServer)}
                 >
                   <i className="pe-7s-like" />
                 </button>
@@ -129,13 +127,24 @@ const ProductGridSingle = ({
                 {product.name}
               </Link>
             </h3>
-            {product.rating && product.rating > 0 ? (
-              <div className="product-rating">
-                <Rating
-                  ratingValue={
-                    product.rating.rating || parseInt(Math.random() * 5)
-                  }
-                />
+            {product.rating && product.rating.rating > 0 ? (
+              <div
+                style={{ display: "inline-flex" }}
+                className="pro-details-rating-wrap"
+              >
+                <div
+                  style={{ color: "#ffa900" }}
+                  className="pro-details-rating"
+                >
+                  <Rating
+                    fractions={2}
+                    readonly={true}
+                    initialRating={product.rating.rating}
+                    emptySymbol="fa fa-star-o fa-1x"
+                    fullSymbol="fa fa-star fa-1x"
+                  />
+                </div>
+                <div> ( {product.rating.count} ) </div>
               </div>
             ) : (
               ""
@@ -158,16 +167,14 @@ const ProductGridSingle = ({
         show={modalShow}
         onHide={() => setModalShow(false)}
         product={product}
-        currency={currency}
         discountedprice={discountedPrice}
         finalproductprice={finalProductPrice}
         finaldiscountedprice={finalDiscountedPrice}
         cartitem={cartItem}
         wishlistitem={wishlistItem}
-        compareitem={compareItem}
         addtocart={addToCart}
         addtowishlist={addToWishlist}
-        addtocompare={addToCompare}
+        addToWishlistServer={addToWishlistServer}
         addtoast={addToast}
       />
     </Fragment>
@@ -178,6 +185,7 @@ ProductGridSingle.propTypes = {
   addToCart: PropTypes.func,
   addToCompare: PropTypes.func,
   addToWishlist: PropTypes.func,
+  addToWishlistServer: PropTypes.func,
   cartItem: PropTypes.object,
   compareItem: PropTypes.object,
   currency: PropTypes.object,

@@ -1,28 +1,33 @@
+import { useQuery } from "@apollo/client";
 import PropTypes from "prop-types";
 import React from "react";
 import Swiper from "react-id-swiper";
 import SectionTitle from "../../helpers/SectionTitle";
+import { GET_CATEGORY_PRODUCTS } from "./graphql";
 import ProductGrid from "./ProductGrid";
 
 const RelatedProductSlider = ({ spaceBottomClass, category }) => {
+  const { error, loading, data } = useQuery(GET_CATEGORY_PRODUCTS, {
+    variables: { id: parseInt(category) },
+  });
   const settings = {
     loop: false,
     slidesPerView: 4,
     grabCursor: true,
     breakpoints: {
       1024: {
-        slidesPerView: 4
+        slidesPerView: 4,
       },
       768: {
-        slidesPerView: 3
+        slidesPerView: 3,
       },
       640: {
-        slidesPerView: 2
+        slidesPerView: 2,
       },
       320: {
-        slidesPerView: 1
-      }
-    }
+        slidesPerView: 1,
+      },
+    },
   };
 
   return (
@@ -42,6 +47,7 @@ const RelatedProductSlider = ({ spaceBottomClass, category }) => {
             <ProductGrid
               category={category}
               limit={6}
+              products={data?.category.products}
               sliderClassName="swiper-slide"
             />
           </Swiper>
@@ -52,8 +58,8 @@ const RelatedProductSlider = ({ spaceBottomClass, category }) => {
 };
 
 RelatedProductSlider.propTypes = {
-  category: PropTypes.string,
-  spaceBottomClass: PropTypes.string
+  category: PropTypes.any,
+  spaceBottomClass: PropTypes.string,
 };
 
 export default RelatedProductSlider;

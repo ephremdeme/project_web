@@ -10,7 +10,7 @@ const AppBanner = ({ spaceTopClass, spaceBottomClass }) => {
       title: "Watches",
       subtitle: "Starting at",
       price: "$99.00",
-      link: "/shop-grid-standard",
+      link: "/shop",
     },
     {
       id: 2,
@@ -18,7 +18,7 @@ const AppBanner = ({ spaceTopClass, spaceBottomClass }) => {
       title: "Plo Bag",
       subtitle: "Starting at",
       price: "$79.00",
-      link: "/shop-grid-standard",
+      link: "/shop",
     },
     {
       id: 3,
@@ -26,7 +26,7 @@ const AppBanner = ({ spaceTopClass, spaceBottomClass }) => {
       title: "Sunglass",
       subtitle: "Starting at",
       price: "$29.00",
-      link: "/shop-grid-standard",
+      link: "/shop",
     },
   ];
 

@@ -52,10 +52,7 @@ const AppFooter = ({
             }`}
           >
             {/* footer copyright */}
-            <FooterCopyright
-              footerLogo="/assets/img/logo/logo.png"
-              spaceBottomClass="mb-30"
-            />
+            <h1 style={{height :"26px", fontWeight:"lighter"}} className="mb30" >Shop in AR</h1>
           </div>
           <div
             className={`${

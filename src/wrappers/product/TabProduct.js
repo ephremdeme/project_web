@@ -2,9 +2,10 @@ import PropTypes from "prop-types";
 import React from "react";
 import Tab from "react-bootstrap/Tab";
 import Nav from "react-bootstrap/Nav";
-import products from "./product.json";
 import SectionTitle from "../../helpers/SectionTitle";
 import ProductGrid from "./ProductGrid";
+import { useQuery } from "@apollo/client";
+import { GET_POPULAR_PRODUCTS, GET_ALL_PRODUCTS } from "./graphql";
 const TabProduct = ({
   spaceTopClass,
   spaceBottomClass,
@@ -22,7 +23,7 @@ const TabProduct = ({
           titleText="DAILY DEALS!"
           positionClass="mt-5 text-center"
         />
-        <Tab.Container defaultActiveKey="bestSeller">
+        <Tab.Container defaultActiveKey="newArrival">
           <Nav
             variant="pills"
             className="product-tab-list pt-30 pb-55 text-center"
@@ -38,44 +39,15 @@ const TabProduct = ({
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link eventKey="saleItems">
-                <h4>Sale Items</h4>
+              <Nav.Link eventKey="mostViewed">
+                <h4>Most Viewed</h4>
               </Nav.Link>
             </Nav.Item>
           </Nav>
           <Tab.Content>
-            <Tab.Pane eventKey="newArrival">
-              <div className="row">
-                <ProductGrid
-                  category={category}
-                  type="bestSeller"
-                  products={products}
-                  limit={8}
-                  spaceBottomClass="mb-25"
-                />
-              </div>
-            </Tab.Pane>
-            <Tab.Pane eventKey="bestSeller">
-              <div className="row">
-                <ProductGrid
-                  category={category}
-                  type="bestSeller"
-                  products={products}
-                  limit={8}
-                  spaceBottomClass="mb-25"
-                />
-              </div>
-            </Tab.Pane>
-            <Tab.Pane eventKey="saleItems">
-              <div className="row">
-                <ProductGrid
-                  category={category}
-                  type="saleItems"
-                  limit={8}
-                  spaceBottomClass="mb-25"
-                />
-              </div>
-            </Tab.Pane>
+            <NewArrivedProducts />
+            <MostViewedProducts />
+            <BestSellerProducts />
           </Tab.Content>
         </Tab.Container>
       </div>
@@ -83,8 +55,65 @@ const TabProduct = ({
   );
 };
 
-const NewArrivedProduct = () => {
-  return <React.Fragment></React.Fragment>;
+const BestSellerProducts = () => {
+  const { loading, data, error } = useQuery(GET_ALL_PRODUCTS, {
+    variables: { limit: 10 },
+  });
+  return (
+    <React.Fragment>
+      <Tab.Pane eventKey="bestSeller">
+        <div className="row">
+          <ProductGrid
+            products={data?.products.products}
+            type="bestSeller"
+            limit={8}
+            spaceBottomClass="mb-25"
+          />
+        </div>
+      </Tab.Pane>
+    </React.Fragment>
+  );
+};
+
+const MostViewedProducts = () => {
+  const { loading, data, error } = useQuery(GET_POPULAR_PRODUCTS, {
+    variables: { limit: 10 },
+  });
+  console.log(data);
+  console.log("Errors", error);
+  return (
+    <React.Fragment>
+      <Tab.Pane eventKey="mostViewed">
+        <div className="row">
+          <ProductGrid
+            products={data?.popularProducts.products}
+            type="bestSeller"
+            limit={8}
+            spaceBottomClass="mb-25"
+          />
+        </div>
+      </Tab.Pane>
+    </React.Fragment>
+  );
+};
+const NewArrivedProducts = () => {
+  const { loading, data, error } = useQuery(GET_ALL_PRODUCTS, {
+    variables: { limit: 10 },
+  });
+  return (
+    <React.Fragment>
+      <Tab.Pane eventKey="newArrival">
+        <div className="row">
+          <ProductGrid
+            products={data?.products.products}
+            type="bestSeller"
+            limit={8}
+            spaceBottomClass="mb-25"
+          />
+        </div>
+      </Tab.Pane>
+    </React.Fragment>
+  );
 };
 
 TabProduct.propTypes = {

@@ -11,12 +11,10 @@ const MobileNavMenu = ({ strings }) => {
         </li>
 
         <li className="menu-item-has-children">
-          <Link to={process.env.PUBLIC_URL + "/shop-grid-standard"}>Shop</Link>
+          <Link to={process.env.PUBLIC_URL + "/shop"}>Shop</Link>
         </li>
         <li>
-          <Link to={process.env.PUBLIC_URL + "/shop-grid-standard"}>
-            Collection
-          </Link>
+          <Link to={process.env.PUBLIC_URL + "/shop"}>Collection</Link>
         </li>
         <li className="menu-item-has-children">
           <Link to={process.env.PUBLIC_URL + "/"}>Pages</Link>

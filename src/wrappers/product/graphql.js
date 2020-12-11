@@ -15,6 +15,15 @@ export const GET_PRODUCT = gql`
       id
       name
       price
+      quantity
+      category {
+        id
+        category
+      }
+      subCategory {
+        id
+        category
+      }
       comments {
         id
         comment
@@ -30,21 +39,96 @@ export const GET_PRODUCT = gql`
   }
 `;
 
-export const GET_PRODUCTS = gql`
-  {
-    products {
+export const GET_CATEGORY_PRODUCTS = gql`
+  query category($id: Int!) {
+    category(id: $id) {
       id
-      name
-      price
-      description
-      category {
-        category
+      category
+      products {
+        id
+        name
+        price
+        quantity
+        shortDescription
+        fullDescription
+        seller {
+          phone
+        }
+        category {
+          category
+          id
+        }
+        images {
+          filename
+        }
+        rating {
+          rating
+          count
+        }
       }
-      images {
-        filename
+    }
+  }
+`;
+
+export const GET_ALL_PRODUCTS = gql`
+  query getProducts($offset: Int, $limit: Int) {
+    products(offset: $offset, limit: $limit) {
+      count
+      products {
+        id
+        name
+        quantity
+        shortDescription
+        fullDescription
+        seller {
+          phone
+        }
+        price
+        images {
+          filename
+        }
+        category {
+          id
+          category
+        }
+        rating {
+          count
+          rating
+        }
       }
-      rating {
-        rating
+    }
+  }
+`;
+
+export const GET_POPULAR_PRODUCTS = gql`
+  query getProducts($offset: Int, $limit: Int) {
+    popularProducts(offset: $offset, limit: $limit) {
+      count
+      products {
+        id
+        name
+        quantity
+        shortDescription
+        fullDescription
+        seller {
+          phone
+        }
+        price
+        rating {
+          rating
+          count
+        }
+        images {
+          filename
+        }
+        category {
+          id
+          category
+        }
+        subCategory {
+          id
+          category
+        }
       }
     }
   }
@@ -73,10 +157,18 @@ export const ADD_RATE = gql`
 `;
 
 export const ADD_COMMENT = gql`
-  mutation addComment($comment: String!, $productId: Int!) {
-    createComment(comment: $comment, productId: $productId) {
+  mutation addComment($comment: String!, $productId: Int!, $rating: Int!) {
+    createComment(comment: $comment, productId: $productId, rating: $rating) {
+      __typename
       id
       comment
+      user {
+        id
+        username
+      }
+      rating {
+        rating
+      }
     }
   }
 `;
@@ -91,17 +183,18 @@ export const UPDATE_COMMENT = gql`
 export const PRODUCT_COMMENTS = gql`
   query getProductComments($productId: Int!) {
     comments(productId: $productId) {
-      id
-      comment
-    }
-  }
-`;
-
-export const COMMENTS = gql`
-  {
-    comments(productId: 6) {
-      id
-      comment
+      count
+      comments {
+        id
+        comment
+        user {
+          id
+          username
+        }
+        rating {
+          rating
+        }
+      }
     }
   }
 `;

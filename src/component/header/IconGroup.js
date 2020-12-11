@@ -2,20 +2,21 @@ import { useQuery, useReactiveVar } from "@apollo/client";
 import PropTypes from "prop-types";
 import React, { useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { authDataVar } from "../../authReactive";
+import { authDataVar, cartItemsVar, wishlistItemsVar } from "../../authReactive";
 import { GET_USER } from "../../pages/auths/graphql";
+import { deleteFromCart} from "../../pages/other/cartHelper";
 import MenuCart from "./sub-components/MenuCart";
+
+
 
 const IconGroup = ({
   currency,
-  cartData,
-  wishlistData,
-  compareData,
-  deleteFromCart,
   iconWhiteClass,
   ...props
 }) => {
   const authData = useReactiveVar(authDataVar);
+  const cartData = useReactiveVar(cartItemsVar);
+  const wishlistData = useReactiveVar(wishlistItemsVar);
   const hist = useHistory();
 
   const handleClick = (e) => {
@@ -94,14 +95,7 @@ const IconGroup = ({
           </ul>
         </div>
       </div>
-      <div className="same-style header-compare">
-        <Link to={process.env.PUBLIC_URL + "/compare"}>
-          <i className="pe-7s-shuffle" />
-          <span className="count-style">
-            {compareData && compareData.length ? compareData.length : 0}
-          </span>
-        </Link>
-      </div>
+      
       <div className="same-style header-wishlist">
         <Link to={process.env.PUBLIC_URL + "/wishlist"}>
           <i className="pe-7s-like" />

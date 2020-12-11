@@ -1,4 +1,4 @@
-import { useMutation } from "@apollo/client";
+import { useMutation, useReactiveVar } from "@apollo/client";
 import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { Card, Col, Container, Form, FormControl, Row } from "react-bootstrap";
@@ -7,8 +7,13 @@ import { authDataVar } from "../../authReactive";
 import { LOGIN_USER } from "./graphql";
 
 const AppLogin = (props) => {
+  let user = useReactiveVar(authDataVar);
+  if (user?.username) {
+    props.history.goBack();
+  }
+
   const [values, setValues] = useState({
-    username: "",
+    phone: "",
     password: "",
   });
 
@@ -31,7 +36,7 @@ const AppLogin = (props) => {
         token: data?.login?.token,
         username: data?.login?.User?.username,
       });
-      props.history.push("/")
+      props.history.goBack();
     }
   }, [data]);
 
@@ -57,12 +62,12 @@ const AppLogin = (props) => {
                 </div>
                 <Card.Body className="mx-4 my-5">
                   <Form.Group className="mt-5" controlId="username">
-                    <Form.Label>Username</Form.Label>
+                    <Form.Label>Phone</Form.Label>
                     <Form.Control
-                      aria-label="Your Username"
-                      name="username"
-                      type="text"
-                      placeholder="Username"
+                      aria-label="Your Phone Number"
+                      name="phone"
+                      type="tel"
+                      placeholder="phone"
                       onChange={(e) => handleChange(e)}
                     />
                   </Form.Group>

@@ -10,9 +10,15 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
 import { createUploadLink } from "apollo-upload-client";
-import { authDataVar } from "./authReactive";
-import { ApolloClient, ApolloProvider, createHttpLink, InMemoryCache } from "@apollo/client";
+import { authDataVar, cartItemsVar, wishlistItemsVar } from "./authReactive";
+import {
+  ApolloClient,
+  ApolloProvider,
+  createHttpLink,
+  InMemoryCache,
+} from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
+import { GRAPHQL_LINK } from "./config";
 
 // const client = new ApolloClient({
 //    uri: "http://10.240.72.104:5000/api"
@@ -31,7 +37,7 @@ const authLink = setContext((_, { headers }) => {
 });
 
 const uploadLink = createHttpLink({
-  uri: "http://10.240.72.53:5001/graphql",
+  uri: GRAPHQL_LINK,
 });
 
 const client = new ApolloClient({
@@ -42,6 +48,16 @@ const client = new ApolloClient({
           authData: {
             read() {
               return authDataVar();
+            },
+          },
+          cartItems: {
+            read() {
+              return cartItemsVar();
+            },
+          },
+          wishlistItems: {
+            read() {
+              return wishlistItemsVar();
             },
           },
         },
