@@ -15,6 +15,7 @@ import AppFooter from "./layout/AppFooter";
 import AppHeader from "./layout/AppHeader";
 
 import AppHome from "./pages/home/AppHome";
+import About from "./pages/other/About";
 
 const Login = lazy(() => import("./pages/auths/LogIn"));
 const AppRegister = lazy(() => import("./pages/auths/Register"));
@@ -82,6 +83,10 @@ function App() {
                   <Route
                     path={process.env.PUBLIC_URL + "/cart"}
                     component={Cart}
+                  />
+                  <Route
+                    path={process.env.PUBLIC_URL + "/about"}
+                    component={About}
                   />
                   <Route
                     path={process.env.PUBLIC_URL + "/checkout"}
