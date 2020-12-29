@@ -8,14 +8,14 @@ const HeroSliderOne = () => {
       id: 1,
       title: "Smart Shoping",
       subtitle: "Shoping In Augmented Reality",
-      image: "/assets/img/slider/augmented-furniture.jpg",
+      image: "/assets/img/slider/ikea-app1.jpg",
       url: "/shop",
     },
     {
       id: 2,
       title: "Try Before You Buy",
-      subtitle: "Shop at the comfort of your home. Design Your Home",
-      image: "/assets/img/slider/ikea-app.jpg",
+      subtitle: "Shop at the comfort of your home",
+      image: "/assets/img/slider/augmented-furniture1.jpg",
       url: "/shop",
     },
   ];
