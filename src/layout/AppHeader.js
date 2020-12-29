@@ -57,7 +57,14 @@ const Header = ({
             <div className="col-xl-2 col-lg-2 col-md-6 col-4">
               {/* header logo */}
               {/* <Logo imageUrl="/assets/img/logo/logo.png" logoClass="logo" /> */}
-              <h1 style={{height :"26px", fontWeight:"lighter"}} className="logo" >Shop in AR</h1>
+              <a href="/">
+                <h1
+                  style={{ height: "26px", fontWeight: "lighter" }}
+                  className="logo"
+                >
+                  AR Shop
+                </h1>
+              </a>
             </div>
             <div className="col-xl-8 col-lg-8 d-none d-lg-block">
               {/* Nav menu */}
@@ -84,18 +91,15 @@ Header.propTypes = {
   top: PropTypes.string,
 };
 
-const AppHeader = ()=>{
-    return (
+const AppHeader = () => {
+  return (
     <React.Fragment>
-        <MetaTags>
+      <MetaTags>
         <title>Shop In AR | Home</title>
-        
       </MetaTags>
-    <Header
-      layout="container-fluid"
-      headerPaddingClass="header-padding-1"
-    />
-  </React.Fragment>)
-}
+      <Header layout="container-fluid" headerPaddingClass="header-padding-1" />
+    </React.Fragment>
+  );
+};
 
-export default  AppHeader;
+export default AppHeader;
