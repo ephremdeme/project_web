@@ -6,6 +6,7 @@ import SectionTitle from "../../helpers/SectionTitle";
 import ProductGrid from "./ProductGrid";
 import { useQuery } from "@apollo/client";
 import { GET_POPULAR_PRODUCTS, GET_ALL_PRODUCTS } from "./graphql";
+import Loading from "react-loading";
 const TabProduct = ({
   spaceTopClass,
   spaceBottomClass,
@@ -59,6 +60,14 @@ const BestSellerProducts = () => {
   const { loading, data, error } = useQuery(GET_ALL_PRODUCTS, {
     variables: { limit: 10 },
   });
+  if (loading)
+    return (
+      <Tab.Pane eventKey="bestSeller">
+        <div className="row">
+          <Loading className="container" color="#000" type="bars" />
+        </div>
+      </Tab.Pane>
+    );
   return (
     <React.Fragment>
       <Tab.Pane eventKey="bestSeller">
@@ -79,8 +88,15 @@ const MostViewedProducts = () => {
   const { loading, data, error } = useQuery(GET_POPULAR_PRODUCTS, {
     variables: { limit: 10 },
   });
-  console.log(data);
-  console.log("Errors", error);
+
+  if (loading)
+    return (
+      <Tab.Pane eventKey="mostViewed">
+        <div className="row">
+          <Loading className="container" color="#000" type="bars" />
+        </div>
+      </Tab.Pane>
+    );
   return (
     <React.Fragment>
       <Tab.Pane eventKey="mostViewed">
@@ -100,6 +116,14 @@ const NewArrivedProducts = () => {
   const { loading, data, error } = useQuery(GET_ALL_PRODUCTS, {
     variables: { limit: 10 },
   });
+  if (loading)
+    return (
+      <Tab.Pane eventKey="newArrival">
+        <div className="row">
+          <Loading className="container" color="#000" type="bars" />
+        </div>
+      </Tab.Pane>
+    );
   return (
     <React.Fragment>
       <Tab.Pane eventKey="newArrival">

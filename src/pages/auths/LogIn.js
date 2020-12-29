@@ -87,6 +87,7 @@ const AppLogin = (props) => {
                       variant="danger"
                       type="button"
                       className="btn-block z-depth-2"
+                      disabled={loading}
                       onClick={handleSubmit}
                     >
                       Log in

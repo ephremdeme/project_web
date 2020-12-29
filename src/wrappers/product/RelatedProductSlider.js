@@ -2,6 +2,7 @@ import { useQuery } from "@apollo/client";
 import PropTypes from "prop-types";
 import React from "react";
 import Swiper from "react-id-swiper";
+import Loading from "react-loading";
 import SectionTitle from "../../helpers/SectionTitle";
 import { GET_CATEGORY_PRODUCTS } from "./graphql";
 import ProductGrid from "./ProductGrid";
@@ -29,6 +30,15 @@ const RelatedProductSlider = ({ spaceBottomClass, category }) => {
       },
     },
   };
+
+  if (loading)
+    return (
+      <div className="shop-area pt-95 pb-100">
+        <div className="container">
+          <Loading className="container" color="#000" type="bars" />
+        </div>
+      </div>
+    );
 
   return (
     <div

@@ -5,19 +5,25 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import { ToastProvider } from "react-toast-notifications";
 import { BreadcrumbsProvider } from "react-breadcrumbs-dynamic";
-import ScrollToTop from "./helpers/scroll-top";
-import AppHeader from "./layout/AppHeader";
-import Login from "./pages/auths/LogIn";
-import AppRegister from "./pages/auths/Register";
+
 import { GET_USER } from "./pages/auths/graphql";
 import { useQuery, useReactiveVar } from "@apollo/client";
 import { authDataVar } from "./authReactive";
-import AppHome from "./pages/home/AppHome";
+import ScrollToTop from "./helpers/scroll-top";
+
 import AppFooter from "./layout/AppFooter";
-import Product from "./pages/product/Product";
-import Cart from "./pages/other/Cart";
-import Checkout from "./pages/other/Checkout";
-import Wishlist from "./pages/other/Wishlist";
+import AppHeader from "./layout/AppHeader";
+
+import AppHome from "./pages/home/AppHome";
+
+const Login = lazy(() => import("./pages/auths/LogIn"));
+const AppRegister = lazy(() => import("./pages/auths/Register"));
+
+const Product = lazy(() => import("./pages/product/Product"));
+
+const Checkout = lazy(() => import("./pages/other/Checkout"));
+const Wishlist = lazy(() => import("./pages/other/Wishlist"));
+const Cart = lazy(() => import("./pages/other/Cart"));
 const ShopGridStandard = lazy(() => import("./pages/shop/ShopGridStandard"));
 
 function App() {
@@ -41,8 +47,8 @@ function App() {
             <ScrollToTop>
               <Suspense
                 fallback={
-                  <div className="Shop In AR-preloader-wrapper">
-                    <div className="Shop In AR-preloader">
+                  <div className="flone-preloader-wrapper">
+                    <div className="flone-preloader">
                       <span></span>
                       <span></span>
                     </div>

@@ -13,7 +13,7 @@ const AppFooter = ({
   spaceRightClass,
   containerClass,
   extraFooterClass,
-  sideMenu
+  sideMenu,
 }) => {
   const [scroll, setScroll] = useState(0);
   const [top, setTop] = useState(0);
@@ -52,7 +52,12 @@ const AppFooter = ({
             }`}
           >
             {/* footer copyright */}
-            <h1 style={{height :"26px", fontWeight:"lighter"}} className="mb30" >Shop in AR</h1>
+            <h1
+              style={{ height: "26px", fontWeight: "lighter" }}
+              className="mb30"
+            >
+              AR Shop
+            </h1>
           </div>
           <div
             className={`${
@@ -211,7 +216,7 @@ AppFooter.propTypes = {
   spaceBottomClass: PropTypes.string,
   spaceTopClass: PropTypes.string,
   spaceLeftClass: PropTypes.string,
-  spaceRightClass: PropTypes.string
+  spaceRightClass: PropTypes.string,
 };
 
 export default AppFooter;

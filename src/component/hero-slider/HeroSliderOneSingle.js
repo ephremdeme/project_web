@@ -13,9 +13,9 @@ const HeroSliderOneSingle = ({ data, sliderClassName }) => {
         <div className="row">
           <div className="col-xl-6 col-lg-6 col-md-6 col-12 col-sm-6">
             <div className="slider-content slider-animated-1">
-              <h3 className="animated">{data.title}</h3>
-              <h1 className="animated">{data.subtitle}</h1>
-              <div className="slider-btn btn-hover">
+              <h1 className="animated">{data.title}</h1>
+              <h3 className="animated">{data.subtitle}</h3>
+              <div className="slider-btn btn-hover mt-4">
                 <Link
                   className="animated"
                   to={process.env.PUBLIC_URL + data.url}
@@ -28,7 +28,7 @@ const HeroSliderOneSingle = ({ data, sliderClassName }) => {
           <div className="col-xl-6 col-lg-6 col-md-6 col-12 col-sm-6">
             <div className="slider-single-img slider-animated-1">
               <img
-                className="animated img-fluid"
+                className="animated img-fluid mb-2"
                 src={process.env.PUBLIC_URL + data.image}
                 alt=""
               />
