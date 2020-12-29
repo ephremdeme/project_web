@@ -10,8 +10,10 @@ import { GET_PRODUCT } from "../../wrappers/product/graphql";
 import Skeleton from "react-loading";
 import ProductDescriptionTab from "../../wrappers/product/ProductDescriptionTab";
 import { PHOTO_LINK } from "../../config";
+import Loading from "react-loading";
 
 const Product = ({ location, match }) => {
+  const [view, setView] = useState(false);
   const { pathname } = location;
 
   const { loading, error, data } = useQuery(GET_PRODUCT, {
@@ -19,8 +21,6 @@ const Product = ({ location, match }) => {
       id: parseInt(match.params.id),
     },
   });
-
-  const [view, setView] = useState(false);
 
   useEffect(() => {
     if (data) {
@@ -42,6 +42,15 @@ const Product = ({ location, match }) => {
       setView(<LoadProduct product={product} />);
     }
   }, [data]);
+
+  if ( loading)
+    return (
+      <div className="shop-area pt-95 pb-100">
+        <div className="container">
+          <Loading className="container" color="#000" type="bars" />
+        </div>
+      </div>
+    );
 
   return (
     <Fragment>
@@ -68,7 +77,6 @@ const Product = ({ location, match }) => {
 };
 
 const LoadProduct = ({ product }) => {
-  console.log(product);
   return (
     <React.Fragment>
       {/* product description with image */}

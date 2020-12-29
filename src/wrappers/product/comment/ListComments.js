@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from "@apollo/client";
 import React, { useState, useEffect } from "react";
 import { Tab } from "react-bootstrap";
+import Loading from "react-loading";
 import Rating from "react-rating";
 import { useParams } from "react-router-dom";
 import { ADD_COMMENT, PRODUCT_COMMENTS } from "../graphql";
@@ -36,6 +37,15 @@ const ProductReview = () => {
       setComments(array);
     }
   };
+
+  if (loading)
+    return (
+      <Tab.Pane eventKey="productReviews">
+        <div className="row">
+          <Loading className="container" color="#000" type="bars" />
+        </div>
+      </Tab.Pane>
+    );
   return (
     <React.Fragment>
       <Tab.Pane eventKey="productReviews">

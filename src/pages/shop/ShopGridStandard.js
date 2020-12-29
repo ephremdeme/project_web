@@ -13,6 +13,7 @@ import {
   GET_ALL_PRODUCTS,
   GET_CATEGORY_PRODUCTS,
 } from "../../wrappers/product/graphql";
+import Loading from "react-loading";
 
 const ShopGridStandard = ({ location }) => {
   const [layout, setLayout] = useState("grid three-column");
@@ -32,11 +33,9 @@ const ShopGridStandard = ({ location }) => {
   const { loading: pLoading, data: allProducts, error: pError } = useQuery(
     GET_ALL_PRODUCTS,
     {
-      variables: { limit: sortValue === "All" ? 15 : 15 },
+      variables: { limit: 15 },
     }
   );
-
-  console.log("All", allProducts);
 
   useEffect(() => {
     if (sortValue === "All") {
@@ -49,7 +48,6 @@ const ShopGridStandard = ({ location }) => {
   }, [allProducts, data, sortValue]);
 
   const [products, setProducts] = useState([]);
-
 
   const pageLimit = 15;
   const { pathname } = location;
@@ -79,6 +77,15 @@ const ShopGridStandard = ({ location }) => {
   //     setSortedProducts(sortedProducts);
   //     setCurrentData(sortedProducts.slice(offset, offset + pageLimit));
   //   }, [offset, products, sortType, sortValue, filterSortType, filterSortValue]);
+
+  if (pLoading || loading)
+    return (
+      <div className="shop-area pt-95 pb-100">
+        <div className="container">
+          <Loading className="container" color="#000" type="bars" />
+        </div>
+      </div>
+    );
 
   return (
     <Fragment>

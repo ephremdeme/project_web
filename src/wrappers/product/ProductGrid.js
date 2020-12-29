@@ -19,7 +19,6 @@ const ProductGrid = ({
   let [addToWishlistServer, { loading, error, data }] = useMutation(
     ADD_TO_WISHLIST
   );
-  console.log("Data", data);
   return (
     <Suspense fallback={<h1> Loading Products </h1>}>
       {products?.map((item) => {

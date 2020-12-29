@@ -11,6 +11,7 @@ import { cartItemsVar, wishlistItemsVar } from "../../authReactive";
 import { addToCart } from "./cartHelper";
 import { deleteAllFromWishlist, deleteFromWishlist } from "./wishlistHelper";
 import { REMOVE_ALL_WISHLIST, REMOVE_WISHLIST } from "./graphql";
+import Loading from "react-loading";
 
 const Wishlist = ({ location }) => {
   const { addToast } = useToasts();
@@ -28,6 +29,8 @@ const Wishlist = ({ location }) => {
   ] = useMutation(REMOVE_WISHLIST);
 
   console.log("Remove", rData);
+
+  if (removeAllWishlist) return <Loading />;
 
   return (
     <Fragment>
