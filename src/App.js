@@ -16,6 +16,7 @@ import AppHeader from "./layout/AppHeader";
 
 import AppHome from "./pages/home/AppHome";
 import About from "./pages/other/About";
+import Contact from "./pages/other/Contact";
 
 const Login = lazy(() => import("./pages/auths/LogIn"));
 const AppRegister = lazy(() => import("./pages/auths/Register"));
@@ -73,6 +74,12 @@ function App() {
                         key={routerProps.match.params.id}
                       />
                     )}
+                  />
+
+                  {/*  Contact Us */}
+                  <Route
+                    path={process.env.PUBLIC_URL + "/contact"}
+                    component={Contact}
                   />
 
                   {/* Shop pages */}

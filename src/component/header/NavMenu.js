@@ -1,8 +1,11 @@
+import { useReactiveVar } from "@apollo/client";
 import PropTypes from "prop-types";
 import React from "react";
 import { Link } from "react-router-dom";
+import { authDataVar } from "../../authReactive";
 
 const NavMenu = ({ strings, menuWhiteClass, sidebarMenu }) => {
+  const authData = useReactiveVar(authDataVar);
   return (
     <div
       className={` ${
@@ -34,16 +37,24 @@ const NavMenu = ({ strings, menuWhiteClass, sidebarMenu }) => {
               <li>
                 <Link to={process.env.PUBLIC_URL + "/wishlist"}>Wishlist</Link>
               </li>
-              <li>
-                <Link to={process.env.PUBLIC_URL + "/my-account"}>
-                  My Account
-                </Link>
-              </li>
-              <li>
-                <Link to={process.env.PUBLIC_URL + "/login-register"}>
-                  LogIn / Register
-                </Link>
-              </li>
+              {authData.username && authData.id ? (
+                <li>
+                  <Link to={process.env.PUBLIC_URL + "/my-account"}>
+                    My Account
+                  </Link>
+                </li>
+              ) : (
+                <>
+                  <li>
+                    <Link to={process.env.PUBLIC_URL + "/login"}>LogIn</Link>
+                  </li>
+                  <li>
+                    <Link to={process.env.PUBLIC_URL + "/register"}>
+                      Register
+                    </Link>
+                  </li>
+                </>
+              )}
               <li>
                 <Link to={process.env.PUBLIC_URL + "/about"}>About Us</Link>
               </li>
@@ -84,6 +95,9 @@ const NavMenu = ({ strings, menuWhiteClass, sidebarMenu }) => {
             </li>
           </ul>
         </li> */}
+          <li>
+            <Link to={process.env.PUBLIC_URL + "/contact"}>Contact</Link>
+          </li>
           <li>
             <Link to={process.env.PUBLIC_URL + "/about"}>About Us</Link>
           </li>

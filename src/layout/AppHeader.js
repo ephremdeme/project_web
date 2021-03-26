@@ -60,7 +60,7 @@ const Header = ({
               <a href="/">
                 <h1
                   style={{ height: "26px", fontWeight: "lighter" }}
-                  className="logo"
+                  className="logo dark-grey-text font-weight-bold"
                 >
                   AR Shop
                 </h1>
