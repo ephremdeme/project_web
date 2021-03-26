@@ -38,6 +38,15 @@
   margin-top: 1.5rem !important;
 }
 
+.image-slider {
+  display: flex;
+  align-items: center !important;
+}
+
+.slider-content {
+  padding: 183px 0 0;
+}
+
 .justify-content-start {
   -ms-flex-pack: start !important;
   justify-content: flex-start !important;
@@ -72,12 +81,19 @@
 .grey-text {
   color: #9e9e9e !important;
 }
+.animation-text {
+  padding: 183px 0 0 3%;
+}
 .dark-grey-text {
   color: #4f4f4f !important;
 }
 
 .font-weight-bold {
   font-weight: 700 !important;
+}
+
+.bg-light-gray {
+  background-color: lightgray;
 }
 
 @media only screen and (max-width: 767px) {
