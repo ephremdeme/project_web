@@ -42,3 +42,22 @@ export const ORDER_PRODUCTS = gql`
     }
   }
 `;
+
+export const ADD_CONTACT = gql`
+  mutation createContact(
+    $name: String!
+    $email: String!
+    $subject: String!
+    $message: String!
+  ) {
+    createContact(
+      name: $name
+      email: $email
+      subject: $subject
+      message: $message
+    ) {
+      id
+      subject
+    }
+  }
+`;
