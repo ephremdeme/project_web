@@ -2,14 +2,15 @@ import { useMutation, useReactiveVar } from "@apollo/client";
 import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { Card, Col, Container, Form, FormControl, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { authDataVar } from "../../authReactive";
 import { LOGIN_USER } from "./graphql";
 
 const AppLogin = (props) => {
   let user = useReactiveVar(authDataVar);
   if (user?.username) {
-    props.history.goBack();
+    if (props.history.length) props.history.goBack();
+    props.history.push("/");
   }
 
   const [values, setValues] = useState({
@@ -27,6 +28,8 @@ const AppLogin = (props) => {
     });
   };
 
+  console.log("Length", props.history.length);
+
   useEffect(() => {
     if (data) {
       localStorage.setItem("token", `${data?.login?.token}`);
@@ -36,7 +39,8 @@ const AppLogin = (props) => {
         token: data?.login?.token,
         username: data?.login?.User?.username,
       });
-      props.history.goBack();
+      if (props.history.length) props.history.goBack();
+      props.history.push("/");
     }
   }, [data]);
 
